@@ -1,6 +1,6 @@
 window.onload = function () {
   stateSearch();
-  
+
 }
 
 async function requestApi(url, option) {
@@ -11,63 +11,55 @@ async function requestApi(url, option) {
 }
 
 function stateSearch() {
-  var url = `https://servicodados.ibge.gov.br/api/v1/localidades/states`;
+  var url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados`;
   const request = requestApi(url);
-
   request.then((res) => {
     var mun = document.querySelector("#municipio");
-    document.querySelector("#municipio").disabled = true;
-    var result = '<option selected value="">Selecione um state</option>';
-    mun.innerHTML = result.replace("state", "município");
+    mun.disabled = true;
+    var result = '<option selected value="">Selecione um estado</option>';
     result += res.map(states => {
       return `<option value=${states.id}> ${states.sigla} </option>`;
     });
 
-    var states = document.querySelector('#states');
+    var states = document.querySelector('#estados');
     states.innerHTML = result;
     states.addEventListener("change", function (event) {
       event.preventDefault();
       var stateCode = states.value;
-      if (stateCode.length != 0) {
+      if (!!stateCode) {
         municipalitySearch(stateCode);
-        document.querySelector("#municipio").disabled = false;
       } else {
         stateCode.value = '';
       }
 
     })
 
-
-  })
-
-    .catch(function (error) {
-      console.error(error);
-    });
+  });
 
 }
 
 function municipalitySearch(stateCode) {
-  var url = `https://servicodados.ibge.gov.br/api/v1/localidades/states/${stateCode}/municipios`;
+  var url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${stateCode}/municipios`;
   const request = requestApi(url);
 
   request.then((res) => {
-    var mun = document.querySelector("#municipio");
     var result = '<option selected value="">Selecione um município</option>';
-    mun.innerHTML = result;
+    var mun = document.querySelector("#municipio");
     result += res.map(counties => {
       return `<option value="${counties.id}"> ${counties.nome} </option>`;
     });
+    mun.innerHTML = result;
 
     var counties = document.querySelector('#municipio');
+    counties.disabled = false;
     counties.innerHTML = result;
 
     var button = document.querySelector("#search");
     button.addEventListener("click", function (event) {
       event.preventDefault();
       var codCounties = counties.value;
-      var mesAno = document.querySelector("#data").value;
-      if (codCounties != '' && mesAno != '') {
-        getDate(codCounties, anomes);
+      if (!!codCounties) {
+        getDate(codCounties);
       }
     })
   })
@@ -77,7 +69,7 @@ function municipalitySearch(stateCode) {
 
 }
 
-function getDate(codCounties) {
+async function getDate(codCounties) {
 
   const options = {
     headers: {
@@ -89,7 +81,7 @@ function getDate(codCounties) {
   var date = document.querySelector('#data').value;
   date = date.replace('-', '');
 
-  var finalDate = Number(data);
+  var finalDate = Number(date);
 
   var dataList = [{
     "municipio": {
@@ -107,21 +99,53 @@ function getDate(codCounties) {
     const url = `http://www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=${i}&codigoIbge=${codCounties}&pagina=1`
 
     const request = requestApi(url, options);
-    request.then(function (res) {
+    await request.then(function (res) {
       dataList[0].municipio = res[0].municipio.nomeIBGE;
       dataList[0].nomeIBGE = res[0].municipio.uf.nome;
       dataList[0].valor += res[0].valor;
       dataList[0].quantidadeBenificiados += res[0].quantidadeBeneficiados;
 
-      console.log(dataList[0].municipio);
-      console.log(dataList[0].nomeIBGE);
-      console.log(dataList[0].valor);
-      console.log(dataList[0].quantidadeBenificiados);
+      if (i == finalDate) {
+        var listModal = `
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Municipio: ${dataList[0].municipio}</p>
+            <p>Estado: ${dataList[0].nomeIBGE}</p>
+            <p>Valor total: ${dataList[0].valor}</p>
+            <p>Quantidade de beneficiados: ${dataList[0].quantidadeBenificiados}</p>
+        </div>
+          `;
+ 
+        var modal = document.querySelector('#showModal');
+        modal.innerHTML= listModal;
+
+        var btnClose = document.querySelector('.close');
+
+        var button = document.querySelector('#search');
+
+        button.addEventListener("click", function(event) {
+          event.preventDefault();
+          modal.style.display = 'block';
+        })
+
+        btnClose.onclick = function () {
+          modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        }
+        console.log(showModal);
+      }
 
     });
   }
 
 }
+
+
 
 
 

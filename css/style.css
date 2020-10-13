@@ -52,7 +52,7 @@ button:hover{
     background-color: orange;
 }
 
-section.panel{
+section#panel{
     padding: 3%;
     background: #277eb6;
     border-radius: 25px;
@@ -62,15 +62,4 @@ section.panel{
 
 /*Modal*/
 
-.modal-content {
-    width: 50%;
-    height: 52%;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-top: 50px;
-    align-items: center;
-}
 
-span {
-    margin-left: 80%;
-}
