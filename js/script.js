@@ -1,6 +1,5 @@
 window.onload = function () {
   stateSearch();
-
 }
 
 async function requestApi(url, option) {
@@ -31,9 +30,7 @@ function stateSearch() {
       } else {
         stateCode.value = '';
       }
-
-    })
-
+    });
   });
 
 }
@@ -61,7 +58,7 @@ function municipalitySearch(stateCode) {
       if (!!codCounties) {
         getDate(codCounties);
       }
-    })
+    });
   })
     .catch(function (error) {
       console.error(error);
@@ -107,36 +104,37 @@ async function getDate(codCounties) {
 
       if (i == finalDate) {
         var listModal = `
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Municipio: ${dataList[0].municipio}</p>
-            <p>Estado: ${dataList[0].nomeIBGE}</p>
-            <p>Valor total: ${dataList[0].valor}</p>
-            <p>Quantidade de beneficiados: ${dataList[0].quantidadeBenificiados}</p>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="container">
+            <label for="est">Estado</label>
+            <p>${dataList[0].nomeIBGE}</p>
         </div>
-          `;
- 
+        <div class="container">
+            <label for="mun">Município</label>
+            <p>${dataList[0].municipio}</p>
+        </div>
+        <div class="container">
+            <label for="qtd">Quantidade de beneficiados</label>
+            <p>${dataList[0].quantidadeBenificiados}</p>
+        </div>
+        <div class="container">
+            <label for="val">Valor total</label>
+            <p>${dataList[0].valor}</p>
+        </div>
+    </div>
+          `; 
         var modal = document.querySelector('#showModal');
-        modal.innerHTML= listModal;
+        modal.innerHTML = listModal;
+        modal.style.display = 'block';
 
         var btnClose = document.querySelector('.close');
 
-        var button = document.querySelector('#search');
-
-        button.addEventListener("click", function(event) {
+        btnClose.addEventListener("click", function (event) {
           event.preventDefault();
-          modal.style.display = 'block';
-        })
-
-        btnClose.onclick = function () {
           modal.style.display = 'none';
-        }
+        });
 
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            modal.style.display = 'none';
-          }
-        }
         console.log(showModal);
       }
 

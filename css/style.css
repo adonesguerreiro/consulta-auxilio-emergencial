@@ -1,14 +1,15 @@
+/*Home screen*/
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 95vh;
-    background: dodgerblue
-   
-} 
+    background: dodgerblue;
+}
 
-label {
+.container label {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin-top: 5px;
     font-weight: 800;
@@ -16,7 +17,7 @@ label {
     color: white;
 }
 
-select{
+select {
     width: 100%;
     margin-bottom: 20px;
     height: 30px;
@@ -32,9 +33,9 @@ input {
     height: 30px;
     margin-right: 5px;
     border-radius: 5px;
-} 
+}
 
-button{ 
+button {
     margin-top: 5%;
     border: none;
     color: white;
@@ -48,18 +49,67 @@ button{
     font-weight: 1000;
 }
 
-button:hover{
+button:hover {
     background-color: orange;
 }
 
-section#panel{
+section#panel {
     padding: 3%;
     background: #277eb6;
     border-radius: 25px;
     box-shadow: 2px 2px 2px 2px black;
-
 }
 
 /*Modal*/
 
+.modal {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
 
+.modal-content {
+    background-color: #277eb6;
+    position: flex;
+    margin: auto;
+    padding: 20px;
+    width: 25%;
+    height: 25%;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+
+.close {
+    color: #f7941e;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: orange;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content .container label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-top: 5px;
+    font-weight: 800;
+    font-style: italic;
+    color: white;
+}
+
+p {
+    font-family: 'Courier New', Courier, monospace;
+}
