@@ -65,17 +65,17 @@ section#panel {
 .modal {
     display: none;
     position: fixed;
+    padding-top: 20%;
     justify-content: center;
     z-index: 1;
-    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-    text-align: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    transition: 1s;
+
 }
 
 .modal-content {
@@ -83,8 +83,8 @@ section#panel {
     position: flex;
     margin: auto;
     padding: 20px;
-    width: 25%;
-    height: 25%;
+    width: 30%;
+    height: 40%;
     border-radius: 25px;
     box-shadow: 1px 1px 1px 1px black;
 }
@@ -93,23 +93,33 @@ section#panel {
     color: #f7941e;
     float: right;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: bold;   
 }
 
-.close:hover, .close:focus {
-    color: orange;
-    text-decoration: none;
+button.close:hover {
+    background-color: orange;
+}
+
+span.close:hover {
+    color: black;
     cursor: pointer;
 }
 
+button.close {
+    font-size: 12pt;
+    color: white;
+}
 .modal-content .container label {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin-top: 5px;
     font-weight: 800;
     font-style: italic;
     color: white;
+     
 }
 
-p {
+input {
     font-family: 'Courier New', Courier, monospace;
+    background: white;
+    color: black;
+    height: 30px;
 }
