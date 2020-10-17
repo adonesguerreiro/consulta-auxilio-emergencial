@@ -104,8 +104,10 @@ async function getDate(codCounties) {
 
 			if (i == finalDate) {
 				var listModal = `
-      <div class="modal-content">
-          <span class="close">&times;</span>
+	   <div class="modal-content">
+		  <div class="close">
+		  	<button class="close">&times;</button>
+		  </div>
           <div class="container">
               <label for="est">Estado</label>
               <input type="text" value="${dataList[0].nomeIBGE}" disabled>
@@ -120,23 +122,30 @@ async function getDate(codCounties) {
           </div>
           <div class="container">
               <label for="val">Valor total</label>
-              <input type="text" value="${dataList[0].valor}" disabled>
+              <input type="text" value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(dataList[0].valor)}" disabled>
           </div>
           <div class="container">
-        	<button type="button" class="close">Voltar</button>
+        	<button type="button" class="back">Voltar</button>
           </div>
       </div>
           `;
 				var modal = document.querySelector('#showModal');
 				modal.innerHTML = listModal;
-				modal.style.display = 'block';
+				modal.style.display = 'flex';
 
 				var btnClose = document.querySelector('.close');
+				var btnBack = document.querySelector('.back');
 
 				btnClose.addEventListener("click", function (event) {
 					event.preventDefault();
 					modal.style.display = 'none';
 				});
+
+				btnBack.addEventListener("click", function(event) {
+					event.preventDefault();
+					modal.style.display = 'none';
+				})
+
 
 				console.log(showModal);
 			}
