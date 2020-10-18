@@ -100,10 +100,12 @@ async function getDate(codCounties) {
 
 		const request = requestApi(url, options);
 		await request.then(function (res) {
-			dataList[0].municipio = res[0].municipio.nomeIBGE;
-			dataList[0].nomeIBGE = res[0].municipio.uf.nome;
-			dataList[0].valor += res[0].valor;
-			dataList[0].quantidadeBenificiados += res[0].quantidadeBeneficiados;
+			if (res.length != 0) {
+				dataList[0].municipio = res[0].municipio.nomeIBGE;
+				dataList[0].nomeIBGE = res[0].municipio.uf.nome;
+				dataList[0].valor += res[0].valor;
+				dataList[0].quantidadeBenificiados += res[0].quantidadeBeneficiados;
+			}
 
 			if (i == finalDate) {
 				var listModal = `
@@ -112,7 +114,7 @@ async function getDate(codCounties) {
             <button class="close">&times;</button>
         </div>
         <div>
-            <h2>Auxílio Emergencial por município</h2>
+            <h2>Resultado da busca</h2>
         </div>
         <div class="container">
             <label for="est">Estado</label>
