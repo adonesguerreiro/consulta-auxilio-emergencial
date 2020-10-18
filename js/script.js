@@ -103,31 +103,36 @@ async function getDate(codCounties) {
 			dataList[0].quantidadeBenificiados += res[0].quantidadeBeneficiados;
 
 			if (i == finalDate) {
-				var listModal = `
-	   <div class="modal-content">
-		  <div class="close">
-		  	<button class="close">&times;</button>
-		  </div>
-          <div class="container">
-              <label for="est">Estado</label>
-              <input type="text" value="${dataList[0].nomeIBGE}" disabled>
-          </div>
-          <div class="container">
-              <label for="mun">Município</label>
-              <input type="text" value="${dataList[0].municipio}" disabled>
-          </div>
-          <div class="container">
-              <label for="qtd">Quantidade de beneficiados</label>
-              <input type="text" value="${dataList[0].quantidadeBenificiados}" disabled>
-          </div>
-          <div class="container">
-              <label for="val">Valor total</label>
-              <input type="text" value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(dataList[0].valor)}" disabled>
-          </div>
-          <div class="container">
-        	<button type="button" class="back">Voltar</button>
-          </div>
-      </div>
+		var listModal = `
+	<div class="modal-content">
+        <div class="close">
+            <button class="close">&times;</button>
+        </div>
+        <div>
+            <h2>Auxílio Emergencial por município</h2>
+        </div>
+        <div class="container">
+            <label for="est">Estado</label>
+            <input type="text" value="${dataList[0].nomeIBGE}" disabled>
+        </div>
+        <div class="container">
+            <label for="mun">Município</label>
+            <input type="text" value="${dataList[0].municipio}" disabled>
+        </div>
+        <div class="container">
+            <label for="qtd">Quantidade de beneficiados</label>
+            <input type="text" value="${dataList[0].quantidadeBenificiados}" disabled>
+        </div>
+        <div class="container">
+            <label for="val">Valor total</label>
+            <input type="text"
+                value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(dataList[0].valor)}"
+                disabled>
+        </div>
+        <div class="container">
+            <button type="button" class="back">Voltar</button>
+        </div>
+    </div>
           `;
 				var modal = document.querySelector('#showModal');
 				modal.innerHTML = listModal;
@@ -144,10 +149,7 @@ async function getDate(codCounties) {
 				btnBack.addEventListener("click", function(event) {
 					event.preventDefault();
 					modal.style.display = 'none';
-				})
-
-
-				console.log(showModal);
+				});
 			}
 
 		});
