@@ -13,22 +13,27 @@ function stateSearch() {
 	var url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados`;
 	const request = requestApi(url);
 	request.then((res) => {
-		var mun = document.querySelector("#municipio");
-		mun.disabled = true;
 		var result = '<option selected value="">Selecione um estado</option>';
+
+		var dataCounty = result.replace('estado', 'município');
+		var mun = document.querySelector("#county");
+		mun.innerHTML = dataCounty;
+		mun.disabled = true;
 		result += res.map(states => {
 			return `<option value=${states.id}> ${states.sigla} </option>`;
 		});
 
-		var states = document.querySelector('#estados');
+		var states = document.querySelector('#states');
 		states.innerHTML = result;
-		states.addEventListener("change", function (event) {
+		states.addEventListener("click", function (event) {
 			event.preventDefault();
 			var stateCode = states.value;
 			if (!!stateCode) {
 				municipalitySearch(stateCode);
 			} else {
 				stateCode.value = '';
+				mun.innerHTML = dataCounty;
+				mun.disabled = true;
 			}
 		});
 	});
@@ -41,13 +46,11 @@ function municipalitySearch(stateCode) {
 
 	request.then((res) => {
 		var result = '<option selected value="">Selecione um município</option>';
-		var mun = document.querySelector("#municipio");
 		result += res.map(counties => {
 			return `<option value="${counties.id}"> ${counties.nome} </option>`;
 		});
-		mun.innerHTML = result;
 
-		var counties = document.querySelector('#municipio');
+		var counties = document.querySelector('#county');
 		counties.disabled = false;
 		counties.innerHTML = result;
 
@@ -103,7 +106,7 @@ async function getDate(codCounties) {
 			dataList[0].quantidadeBenificiados += res[0].quantidadeBeneficiados;
 
 			if (i == finalDate) {
-		var listModal = `
+				var listModal = `
 	<div class="modal-content">
         <div class="close">
             <button class="close">&times;</button>
@@ -126,7 +129,7 @@ async function getDate(codCounties) {
         <div class="container">
             <label for="val">Valor total</label>
             <input type="text"
-                value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(dataList[0].valor)}"
+                value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(dataList[0].valor)}"
                 disabled>
         </div>
         <div class="container">
@@ -146,7 +149,7 @@ async function getDate(codCounties) {
 					modal.style.display = 'none';
 				});
 
-				btnBack.addEventListener("click", function(event) {
+				btnBack.addEventListener("click", function (event) {
 					event.preventDefault();
 					modal.style.display = 'none';
 				});
